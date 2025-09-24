@@ -1,10 +1,13 @@
 **Project Scope**
+
 The current scope of this project is to develop an AI capable of learning and completing the first scenario of the Ascent of Egypt campaign ("Hunting") in Age of Empires: Definitive Edition. If this initial stage proves successful, the project may be extended to additional scenarios.
 
 **Approach**
+
 The initial methodology is based on genetic algorithms, though alternative approaches may be considered as the project evolves.
 
 **Objective**
+
 Train the AI to create seven villagers in the shortest possible time.
 
 **Assumptions**
