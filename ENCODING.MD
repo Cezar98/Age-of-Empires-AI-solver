@@ -1,6 +1,7 @@
 Here are the codes (i.e.) actions I intend to use into a discrete space in Gymnasium. For now, we ignore military units as they do not take part of the level (Hunting). The following actions are:
 
 ** Do nothing **
+
 Ditto
 
 ** Create a villager **
