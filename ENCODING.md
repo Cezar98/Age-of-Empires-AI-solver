@@ -33,5 +33,9 @@ Shifts in a x degrees angle for  t miliseconds. That is a parametrised move. Thi
 There is a mini-map. Click on it.
 
 
+**REPRESENTATION**
+
+We will represent this gene as a probability vecto of length 7 (meaning probability to choose a certain solution). Hence, all elements should be between 0 and 1 and sum to 1.
+
 
   
