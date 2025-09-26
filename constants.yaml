@@ -1,0 +1,9 @@
+gather_time:
+  food_bush: 0.45
+  food_hunt: 0.4725
+  food_fish: 0.6
+  wood: 0.55
+spawn_time:
+  villager: 20
+build_time:
+  house: 20
