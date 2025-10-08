@@ -1,9 +1,33 @@
-gather_time:
-  food_bush: 0.45
-  food_hunt: 0.4725
-  food_fish: 0.6
-  wood: 0.55
-spawn_time:
-  villager: 20
-build_time:
-  house: 20
+tick_seconds: 10
+
+# Economy rates are specified per second.  They come from AoE:DE wiki data and
+# rounded to keep the simulator inexpensive while preserving relative ordering
+# between resources.
+gather_rates:
+  food: 0.38   # berries / hunt
+  wood: 0.33
+
+actions:
+  train_villager:
+    food_cost: 50
+    train_time: 25   # seconds
+  build_house:
+    wood_cost: 25
+    build_time: 20
+    pop_increase: 5
+
+initial_state:
+  villagers: 3
+  idle_villagers: 3
+  food: 200
+  wood: 0
+  population_cap: 5
+
+penalties:
+  tc_idle_per_sec: 0.6     # every idle second hurts more than 1 food
+  pop_block_per_sec: 1.2   # supply blocks are harsh
+
+fitness_weights:
+  villagers: 150
+  food: 1
+  wood: 1
