@@ -1,7 +1,7 @@
 """Deterministic economy simulator used for GA experiments.
 
-The simulator consumes a chromosome – a list of gene dictionaries – and
-progresses the game state in discrete ticks.  Each tick is worth
+The simulator consumes a chromosome – a sequence of integer encoded actions –
+and progresses the game state in discrete ticks.  Each tick is worth
 ``constants["tick_seconds"]`` seconds of in-game time.  The function returns a
 fitness score together with a per-tick trace that can be used to debug build
 orders or to validate constant choices.
@@ -243,17 +243,28 @@ def gather_resources(state: GameState, constants: GameConstants) -> dict[str, fl
     return {"food": food_income, "wood": wood_income}
 
 
+ACTION_LOOKUP: dict[int, tuple[str, str | None]] = {
+    0: ("noop", None),
+    1: ("train_villager", None),
+    2: ("assign_food", None),
+    3: ("assign_wood", None),
+    4: ("idle_one", "food"),
+    5: ("idle_one", "wood"),
+    6: ("build_house", None),
+}
+
+
 def simulate(
-    chromosome: Iterable[dict[str, Any]],
+    chromosome: Iterable[int],
     *,
     constants_path: Path | str = DEFAULT_CONSTANTS_PATH,
 ) -> tuple[float, list[dict[str, Any]]]:
     """Run the simulator for a chromosome.
 
     Args:
-        chromosome: Iterable of gene dictionaries.  Each gene must contain an
-            ``"action"`` key and may optionally include a ``"target"`` key used
-            by ``idle_one``.
+        chromosome: Iterable of integer genes describing the action to execute
+            on each tick.  Values are looked up in :data:`ACTION_LOOKUP` which
+            acts as an enum mapping integers to action/target pairs.
         constants_path: Path to the YAML file with balance values.
 
     Returns:
@@ -266,8 +277,10 @@ def simulate(
     trace: list[dict[str, Any]] = []
 
     for tick, gene in enumerate(chromosome):
-        gene_action = str(gene.get("action", "noop")).lower()
-        target = gene.get("target")
+        try:
+            gene_action, target = ACTION_LOOKUP[int(gene)]
+        except (ValueError, KeyError) as exc:  # pragma: no cover - defensive
+            raise ValueError(f"unknown action index '{gene}'") from exc
 
         income = gather_resources(state, constants)
         progress_builds(state, constants)
