@@ -160,18 +160,21 @@ def apply_action(state: GameState, action: str, target: str | None, constants: G
             state.food -= food_cost
             state.train_progress = train_time
             return True, "queued villager"
-        case "assign_food":
+        case "assign_food" | "assign_wood":
+            data = action_data.get(action, {})
+            default_resource = action.removeprefix("assign_")
+            resource = str(data.get("resource", default_resource))
+            worker_attr = f"{resource}_workers"
+
+            if not hasattr(state, worker_attr):
+                return False, f"unsupported resource '{resource}'"
             if state.idle_villagers <= 0:
                 return False, "no idle villager"
+
             state.idle_villagers -= 1
-            state.food_workers += 1
-            return True, "assigned to food"
-        case "assign_wood":
-            if state.idle_villagers <= 0:
-                return False, "no idle villager"
-            state.idle_villagers -= 1
-            state.wood_workers += 1
-            return True, "assigned to wood"
+            setattr(state, worker_attr, getattr(state, worker_attr) + 1)
+            state.events.append(f"assigned to {resource}")
+            return True, f"assigned to {resource}"
         case "idle_one":
             pool = target or "food"
             if pool == "wood" and state.wood_workers > 0:
