@@ -11,6 +11,10 @@ actions:
   train_villager:
     food_cost: 50
     train_time: 25   # seconds
+  assign_food:
+    resource: food
+  assign_wood:
+    resource: wood
   build_house:
     wood_cost: 25
     build_time: 20
