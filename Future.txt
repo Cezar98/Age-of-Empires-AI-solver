@@ -1,0 +1,102 @@
+# Future Roadmap and Learning Guide
+
+This document outlines the next set of milestones for the Age of Empires AI solver. The items are ordered from the most immediate enhancements to ambitious, long-term research efforts. Each entry includes suggested reading material to help you ramp up on the relevant tools or concepts.
+
+1. **Stabilize the deterministic economy simulator for current scenario constraints.**  
+   *Objective:* Validate the gathering rates, action timings, and penalties in `constants.yaml` against authoritative AoE community data and ensure simulator traces align with in-game benchmarks.  
+   *Reading:*  
+   - `simulator.py` module docstring and implementation.  
+   - Age of Empires II Definitive Edition economy spreadsheets (e.g., aoe2.net data compilations).  
+   - [YAML 1.2 Primer](https://yaml.org/spec/1.2/spec.html) for editing constants safely.
+
+2. **Create a validation harness comparing simulator outputs with recorded gameplay.**  
+   *Objective:* Feed captured villager-production logs into `validation.md` workflows to confirm simulator fidelity.  
+   *Reading:*  
+   - `validation.md` for existing validation ideas.  
+   - [pandas Documentation](https://pandas.pydata.org/docs/) for log ingestion and analysis.  
+   - [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html) for plotting time-series comparisons.
+
+3. **Automate game interaction using PyAutoGUI scripts with robust error handling.**  
+   *Objective:* Extend `Aoe.py` to handle screen resolution detection, UI synchronization, and fail-safe stop conditions.  
+   *Reading:*  
+   - [PyAutoGUI Documentation](https://pyautogui.readthedocs.io/en/latest/).  
+   - [OpenCV Python Tutorials](https://docs.opencv.org/master/d6/d00/tutorial_py_root.html) for screen element detection.  
+   - Windows focus management guides (e.g., Microsoft Win32 APIs) if running automation on Windows.
+
+4. **Implement a reproducible logging pipeline for automation runs.**  
+   *Objective:* Capture timestamps, actions, and in-game states to facilitate debugging and offline analysis.  
+   *Reading:*  
+   - Python `logging` module how-to (official docs).  
+   - [SQLite Tutorial](https://www.sqlite.org/docs.html) for lightweight persistent run storage.  
+   - [Structured Logging in Python](https://docs.python.org/3/howto/logging-cookbook.html).
+
+5. **Design a chromosome encoding that covers eco actions beyond villagers.**  
+   *Objective:* Expand `ENCODING.md` to include farms, houses, and basic military actions required for mid-game transitions.  
+   *Reading:*  
+   - `ENCODING.md` for current gene schema.  
+   - [Genetic Algorithm Design Basics](https://www.obitko.com/tutorials/genetic-algorithms/) for encoding strategies.  
+   - [AoE Build Order Guides](https://www.aoezone.net/forums/strategy.7/) for common economic sequences.
+
+6. **Integrate a genetic algorithm training loop that interfaces with the simulator.**  
+   *Objective:* Evolve action sequences with selection, crossover, and mutation operators, using simulator fitness results.  
+   *Reading:*  
+   - [DEAP (Distributed Evolutionary Algorithms in Python)](https://deap.readthedocs.io/en/master/) for GA tooling.  
+   - [NumPy Random Generator API](https://numpy.org/doc/stable/reference/random/index.html) for reproducible mutations.  
+   - [Black-Box Optimization Basics](https://arxiv.org/abs/1904.11482).
+
+7. **Create visualization dashboards for GA progress monitoring.**  
+   *Objective:* Track fitness trends, action distributions, and resource curves over generations.  
+   *Reading:*  
+   - [Plotly Express Guide](https://plotly.com/python/plotly-express/).  
+   - [Dash Framework Documentation](https://dash.plotly.com/introduction) for lightweight dashboards.  
+   - [Bokeh Documentation](https://docs.bokeh.org/en/latest/) as an alternative interactive plotting toolkit.
+
+8. **Develop replay-to-simulator calibration workflows.**  
+   *Objective:* Parse recorded games to automatically adjust constants and penalties for new scenarios.  
+   *Reading:*  
+   - [AoE2 Recorded Game Specification](https://github.com/SiegeEngineers/aoc-mgz) for parsing MGZ files.  
+   - [SciPy Optimization Tutorials](https://docs.scipy.org/doc/scipy/tutorial/optimize.html) for parameter fitting.  
+   - [Hydra Configuration Framework](https://hydra.cc/docs/intro/) for managing calibration experiments.
+
+9. **Introduce reinforcement learning baselines alongside GA.**  
+   *Objective:* Evaluate policy-gradient or Q-learning agents using the simulator as a fast environment.  
+   *Reading:*  
+   - [OpenAI Gymnasium Documentation](https://gymnasium.farama.org/) for environment design.  
+   - [Stable Baselines3](https://stable-baselines3.readthedocs.io/en/master/) tutorials.  
+   - Sutton & Barto, *Reinforcement Learning: An Introduction*, Chapters 6-14.
+
+10. **Add curriculum learning across multiple campaign scenarios.**  
+    *Objective:* Sequence training from "Hunting" to more complex scenarios, gradually expanding action spaces and constraints.  
+    *Reading:*  
+    - [Curriculum Learning Survey](https://arxiv.org/abs/2003.04682).  
+    - Official Age of Empires campaign guides for scenario objectives.  
+    - [RLlib Curriculum Learning Docs](https://docs.ray.io/en/latest/rllib/rllib-training.html#curriculum-learning).
+
+11. **Integrate computer vision for state estimation directly from game frames.**  
+    *Objective:* Replace or augment log-based state tracking with on-screen unit/resource detection to handle uninstrumented gameplay.  
+    *Reading:*  
+    - [Detectron2 Documentation](https://detectron2.readthedocs.io/en/latest/).  
+    - [LabelImg Tool](https://github.com/HumanSignal/labelImg) for dataset annotation.  
+    - [Real-Time Object Detection with YOLOv5](https://docs.ultralytics.com/).
+
+12. **Implement distributed training infrastructure.**  
+    *Objective:* Scale GA and RL experiments across multiple machines or cloud instances with synchronized result aggregation.  
+    *Reading:*  
+    - [Ray Tune Documentation](https://docs.ray.io/en/latest/tune/index.html).  
+    - [Dask Distributed](https://docs.dask.org/en/stable/how-to/distributed.html) for parallel computation.  
+    - [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/) for cluster orchestration.
+
+13. **Enable closed-loop playtesting against AI opponents.**  
+    *Objective:* Measure performance against built-in AoE difficulty levels to validate competitive readiness.  
+    *Reading:*  
+    - [AoE2 AI Scripting Guide](https://aok.heavengames.com/cgi-bin/aokcgi/display.cgi?action=devcenter).  
+    - [Game State Abstraction Papers](https://arxiv.org/abs/2102.07039) for opponent modeling.  
+    - [Elo Rating System Overview](https://www.chess.com/terms/elo-rating-chess) for performance tracking.
+
+14. **Explore transfer learning to other RTS titles.**  
+    *Objective:* Investigate how learned policies generalize to StarCraft II or open-source RTS environments, identifying reusable components.  
+    *Reading:*  
+    - [StarCraft II Learning Environment (SC2LE)](https://github.com/deepmind/pysc2).  
+    - [MicroRTS Research Platform](https://github.com/santiontanon/microrts).  
+    - [Multi-Task RL Survey](https://arxiv.org/abs/2008.01566).
+
