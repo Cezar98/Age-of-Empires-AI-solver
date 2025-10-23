@@ -1,3 +1,5 @@
+**THIS PROJECT IS UNDER CONSTRUCTION **
+
 **Project Scope**
 
 The current scope of this project is to develop an AI capable of learning and completing the first scenario of the Ascent of Egypt campaign ("Hunting") in Age of Empires: Definitive Edition. If this initial stage proves successful, the project may be extended to additional scenarios.
