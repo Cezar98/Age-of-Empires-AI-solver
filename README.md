@@ -21,4 +21,9 @@ Gold and stone resources are irrelevant.
 Resource gathering is limited to food and wood (although wood collection may be non-beneficial, this will be left for the AI to determine through exploration). Only gazelles are available as food source for now. 
 
 **Fitness Function**
+
 The AI’s performance will be evaluated primarily by the in-game score, which at this stage is largely influenced by the number of villagers produced. Achieving victory will add an additional 1000 points to the score.
+
+**How to run the Simulator (functionality not implemented yet)**
+
+The plan is to use a main script while running a level of the game (Age of Empires: the Definitive Edition) in windowed mode. After starting the script, sit back, relax and enjoy the AI doing its work.
