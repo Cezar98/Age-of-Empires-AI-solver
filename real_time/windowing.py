@@ -76,6 +76,8 @@ def load_profile(path: Path = PROFILE_PATH) -> dict | None:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+"""
 ensure_dpi_aware()
 window = find_game_window()
 print(get_client_rect_screen(window))
@@ -92,13 +94,13 @@ profile = {
 save_profile(profile)
 coords = get_client_rect_screen(window)
 # Test purposes
-"""
+
 monitor = {"top": coords[0], "left": coords[1], "width": coords[2], "height": coords[3]}
 output = "TEST.png".format(**monitor)
 with mss() as sct:
     sct_img = sct.grab(monitor)
     tools.to_png(sct_img.rgb, sct_img.size, output=output)
     print(output)
+
+
 """
-
-
